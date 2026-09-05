@@ -1,0 +1,5 @@
+.footer{
+  text-align:center; padding:3rem 1.25rem 4rem; color:var(--ink-soft);
+}
+.script{font-size:2rem; color:var(--accent-deep); display:block; margin-bottom:.3rem;}
+.credit{font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; margin-top:1.2rem; opacity:.7;}

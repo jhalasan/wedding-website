@@ -1,0 +1,79 @@
+:root{
+  --ground:#FAF7F0;
+  --ground-alt:#F1ECDD;
+  --card:#FFFDF7;
+  --ink:#2B3B2A;
+  --ink-soft:#5B6753;
+  --accent:#7C8F5D;
+  --accent-deep:#3F5A3C;
+  --mint:#CFE6D4;
+  --gold:#B79A5D;
+  --line:#DCD3BE;
+  --max:680px;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
+  font-size:19px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+}
+
+h1,h2,h3{text-wrap:balance; margin:0; font-weight:500; color:var(--ink);}
+
+a{color:var(--accent-deep);}
+a:focus-visible, button:focus-visible{outline:2px solid var(--accent-deep); outline-offset:3px;}
+
+.script{
+  font-family:'Mrs Saint Delafield', 'Snell Roundhand', cursive;
+  font-weight:400;
+  line-height:1;
+}
+
+.eyebrow{
+  font-family:'Cormorant Garamond', serif;
+  font-weight:600;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-size:.8rem;
+  color:var(--accent-deep);
+}
+
+.rule{
+  width:64px;
+  height:1px;
+  background:linear-gradient(to right, transparent, var(--gold), transparent);
+  margin:0 auto;
+}
+.rule.wide{width:120px;}
+
+main{max-width:var(--max); margin:0 auto; padding:0 1.25rem;}
+
+section{padding:3.2rem 0;}
+section + section{border-top:1px solid var(--line);}
+
+.section-head{text-align:center; display:flex; flex-direction:column; align-items:center; gap:.55rem; margin-bottom:2.2rem;}
+.section-head h2{font-size:2.1rem; font-style:italic;}
+
+.btn{
+  font-family:'Cormorant Garamond', serif; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+  font-size:.85rem; text-decoration:none; display:inline-block;
+  padding:.75rem 1.6rem; border-radius:2px; transition:transform .15s ease, background .2s ease;
+}
+.btn.solid{background:var(--accent-deep); color:var(--card);}
+.btn.solid:hover{background:var(--ink); transform:translateY(-1px);}
+.btn.ghost{border:1px solid var(--accent-deep); color:var(--accent-deep);}
+.btn.ghost:hover{background:var(--accent-deep); color:var(--card);}
+
+@keyframes fadein{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;}}
+
+.sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
