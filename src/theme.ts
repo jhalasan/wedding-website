@@ -45,3 +45,9 @@ export const centeredHead: React.CSSProperties = {
   gap: ".7rem",
   textAlign: "center",
 };
+
+export const reveal = (visible: boolean): React.CSSProperties => ({
+  opacity: visible ? 1 : 0,
+  transform: visible ? "none" : "translateY(14px)",
+  transition: "opacity .8s ease, transform .8s ease",
+});

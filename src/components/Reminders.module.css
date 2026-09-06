@@ -1,4 +1,0 @@
-.reminders{display:grid; grid-template-columns:1fr; gap:1.4rem; text-align:center;}
-@media (min-width:600px){.reminders{grid-template-columns:repeat(3,1fr);}}
-.item svg{width:34px; height:34px; color:var(--accent-deep); margin-bottom:.5rem;}
-.item h4{font-size:1.15rem; font-style:italic; font-weight:500;}

@@ -1,9 +1,11 @@
-import { c } from "../theme";
+import { c, reveal } from "../theme";
 import { ADVENTURE } from "../data/photos";
+import { useReveal } from "../hooks/useReveal";
 
 export default function AdventureBand() {
+  const { ref, visible } = useReveal<HTMLElement>();
   return (
-    <section style={{ position: "relative", height: "min(90svh,860px)", display: "grid", gridTemplateRows: "1fr auto", padding: "clamp(1.4rem,4vw,2.6rem)", overflow: "hidden", background: c.ink }}>
+    <section ref={ref} style={{ position: "relative", height: "min(90svh,860px)", display: "grid", gridTemplateRows: "1fr auto", padding: "clamp(1.4rem,4vw,2.6rem)", overflow: "hidden", background: c.ink, ...reveal(visible) }}>
       <img src={ADVENTURE} alt="Julius and Revia" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 30%" }} />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(28,40,27,.16) 0%,rgba(28,40,27,.08) 34%,rgba(28,40,27,.62) 68%,rgba(28,40,27,.88) 100%)" }} />
       <div style={{ position: "absolute", inset: 0, boxShadow: "0 0 140px rgba(20,30,19,.55) inset", pointerEvents: "none" }} />

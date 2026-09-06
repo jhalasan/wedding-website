@@ -1,8 +1,10 @@
-import { c, rule } from "../theme";
+import { c, rule, reveal } from "../theme";
+import { useReveal } from "../hooks/useReveal";
 
 export default function Verse() {
+  const { ref, visible } = useReveal<HTMLElement>();
   return (
-    <section style={{ padding: "clamp(3.5rem,8vw,6rem) clamp(1.25rem,5vw,3rem)", textAlign: "center" }}>
+    <section ref={ref} style={{ padding: "clamp(3.5rem,8vw,6rem) clamp(1.25rem,5vw,3rem)", textAlign: "center", ...reveal(visible) }}>
       <div style={{ maxWidth: "34rem", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "1.2rem" }}>
         <span style={rule(c.gold, 120)} />
         <p style={{ fontStyle: "italic", fontSize: "clamp(1.3rem,3.2vw,1.85rem)", lineHeight: 1.5, color: c.green }}>

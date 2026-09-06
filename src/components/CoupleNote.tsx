@@ -1,8 +1,10 @@
-import { c, eyebrow } from "../theme";
+import { c, eyebrow, reveal } from "../theme";
+import { useReveal } from "../hooks/useReveal";
 
 export default function CoupleNote() {
+  const { ref, visible } = useReveal<HTMLElement>();
   return (
-    <section style={{ padding: "clamp(3.5rem,8vw,6.5rem) clamp(1.25rem,5vw,3rem)" }}>
+    <section ref={ref} style={{ padding: "clamp(3.5rem,8vw,6.5rem) clamp(1.25rem,5vw,3rem)", ...reveal(visible) }}>
       <div style={{ maxWidth: "62rem", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,260px),1fr))", gap: "clamp(1.6rem,5vw,3.5rem)", alignItems: "center" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           <span style={eyebrow}>A note from us</span>

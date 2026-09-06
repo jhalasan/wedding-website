@@ -1,134 +1,83 @@
-import styles from "./Entourage.module.css";
+import { c, eyebrow, sectionTitle, centeredHead, sectionPad, reveal } from "../theme";
+import { PARENTS, BEST_MAN, MAID_OF_HONOR, GROOMSMEN, BRIDESMAIDS, FLOWER_GIRLS, BEARERS, SECONDARY, PRINCIPAL_SPONSORS } from "../data/entourage";
+import { useReveal } from "../hooks/useReveal";
 
-export function Entourage() {
+const rowGrid = (min = 220): React.CSSProperties => ({
+  display: "grid",
+  gridTemplateColumns: `repeat(auto-fit,minmax(min(100%,${min}px),1fr))`,
+  gap: "1.6rem",
+  paddingTop: "1.4rem",
+  borderTop: `1px solid ${c.line}`,
+});
+
+const rowLabel: React.CSSProperties = { fontSize: ".98rem", letterSpacing: ".26em", textTransform: "uppercase", fontWeight: 600, color: c.green, paddingTop: ".35rem" };
+const subLabel: React.CSSProperties = { fontSize: ".94rem", letterSpacing: ".2em", textTransform: "uppercase", color: c.green, marginBottom: ".3rem" };
+const col: React.CSSProperties = { display: "flex", flexDirection: "column", gap: ".15rem" };
+const name: React.CSSProperties = { fontSize: "1.34rem" };
+const note: React.CSSProperties = { fontStyle: "italic", color: c.sage, fontSize: "1.18rem" };
+
+const Names = ({ label, names }: { label?: string; names: string[] }) => (
+  <div style={col}>
+    {label && <h4 style={subLabel}>{label}</h4>}
+    {names.map((n) => <p key={n} style={name}>{n}</p>)}
+  </div>
+);
+
+export default function Entourage() {
+  const { ref, visible } = useReveal<HTMLElement>();
   return (
-    <section id="entourage">
-      <div className="section-head">
-        <span className="eyebrow">Those Who Stand With Us</span>
-        <h2>Wedding Entourage</h2>
-        <span className="rule"></span>
-      </div>
-
-      <div className={styles.kicker}>
-        <span className={styles.family}>Halasan &amp; Ureta</span>
-      </div>
-
-      <div className={styles.roleBlock}>
-        <h3>Parents</h3>
-        <div className={styles.duo}>
-          <div className={styles.who}>
-            <h4>Parents of the Groom</h4>
-            <p>Ar. Ismael Halasan, EUAP</p>
-            <p>Mrs. Gina Teresa Halasan</p>
-          </div>
-          <div className={styles.who}>
-            <h4>Parents of the Bride</h4>
-            <p>Mr. Arjune Ureta</p>
-            <p>Mrs. Annabelle Ureta</p>
-          </div>
+    <section ref={ref} id="entourage" style={{ padding: sectionPad, ...reveal(visible) }}>
+      <div style={{ maxWidth: "66rem", margin: "0 auto" }}>
+        <div style={{ ...centeredHead, marginBottom: "clamp(2rem,4vw,3rem)" }}>
+          <span style={eyebrow}>Those Who Stand With Us</span>
+          <h2 style={sectionTitle}>Wedding Entourage</h2>
+          <span style={{ fontFamily: "'Mrs Saint Delafield',cursive", fontSize: "clamp(1.9rem,5vw,2.6rem)", lineHeight: 1.3, color: c.green, marginTop: ".3rem" }}>Halasan &amp; Ureta</span>
         </div>
-      </div>
 
-      <div className={styles.roleBlock}>
-        <h3>Best Man &amp; Maid of Honor</h3>
-        <div className={styles.duo}>
-          <div className={styles.who}>
-            <h4>Best Man</h4>
-            <p>Mr. Jay Bee Halasan</p>
+        <div style={{ display: "flex", flexDirection: "column", gap: "clamp(2rem,4vw,3rem)" }}>
+          <div style={rowGrid()}>
+            <h3 style={rowLabel}>Parents</h3>
+            <Names label="Parents of the Groom" names={PARENTS.groom} />
+            <Names label="Parents of the Bride" names={PARENTS.bride} />
           </div>
-          <div className={styles.who}>
-            <h4>Maid of Honor</h4>
-            <p>Ms. Estelle Glaze Racines</p>
-          </div>
-        </div>
-      </div>
 
-      <div className={styles.roleBlock}>
-        <h3>Groomsmen &amp; Bridesmaids</h3>
-        <div className={`${styles.nameGrid} ${styles.cols2}`}>
-          <p>Junjie Ureta</p>
-          <p>Sophia Nicole Calumpang</p>
-          <p>Dennis Anton Halasan</p>
-          <p>Adrianne Ponsaran</p>
-          <p>Justine Ryan Calumpang</p>
-          <p>Marchellen Israel</p>
-          <p>Ree Ismael Halasan</p>
-          <p>Leila Ysabel Publico</p>
-          <p>Kenneth Adrian Calumpang</p>
-          <p>Hannah Katrina Tancio</p>
-        </div>
-      </div>
+          <div style={rowGrid()}>
+            <h3 style={rowLabel}>Best Man &amp; Maid of Honor</h3>
+            <Names label="Best Man" names={BEST_MAN} />
+            <Names label="Maid of Honor" names={MAID_OF_HONOR} />
+          </div>
 
-      <div className={styles.roleBlock}>
-        <h3>Flower Girls &amp; Bearers</h3>
-        <span className={styles.caption}>
-          Carrying flowers of prosperity, and the symbols of faith, love &amp; treasure
-        </span>
-        <div className={styles.duo}>
-          <div className={styles.who}>
-            <h4>Flower Girls</h4>
-            <p>Zyra Bernice Lanticse</p>
-            <p>Calla Phyllis Halasan</p>
-            <p>Zarri Shane Navalta</p>
+          <div style={rowGrid()}>
+            <h3 style={rowLabel}>Groomsmen &amp; Bridesmaids</h3>
+            <Names names={GROOMSMEN} />
+            <Names names={BRIDESMAIDS} />
           </div>
-          <div className={styles.who}>
-            <h4>Bible Bearer</h4>
-            <p>Ezekiel Ivan Halasan</p>
-          </div>
-          <div className={styles.who}>
-            <h4>Ring Bearer</h4>
-            <p>John Adham Ureta</p>
-          </div>
-          <div className={styles.who}>
-            <h4>Coin Bearer</h4>
-            <p>Kaire Angelo Navalta</p>
-          </div>
-        </div>
-      </div>
 
-      <div className={styles.roleBlock}>
-        <h3>Secondary Sponsors</h3>
-        <div className={styles.duo}>
-          <div className={styles.who}>
-            <h4>Veil</h4>
-            <p>Engr. Ivan Ismael Halasan</p>
-            <p>Mrs. Risen Faith Halasan</p>
+          <div style={rowGrid()}>
+            <div>
+              <h3 style={rowLabel}>Flower Girls &amp; Bearers</h3>
+              <p style={{ ...note, marginTop: ".6rem" }}>Carrying flowers of prosperity, and the symbols of faith, love &amp; treasure</p>
+            </div>
+            <Names label="Flower Girls" names={FLOWER_GIRLS} />
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              {BEARERS.map((b) => <Names key={b.label} label={b.label} names={b.names} />)}
+            </div>
           </div>
-          <div className={styles.who}>
-            <h4>Cord</h4>
-            <p>Mr. Albhy Ureta</p>
-            <p>Mrs. Marilyn Ureta</p>
-          </div>
-          <div className={styles.who}>
-            <h4>Candle</h4>
-            <p>Mr. Lenard Paul Halasan</p>
-            <p>Mrs. Trixy Ann Halasan</p>
-          </div>
-        </div>
-      </div>
 
-      <div className={styles.roleBlock}>
-        <h3>Principal Sponsors</h3>
-        <span className={styles.caption}>To stand as witnesses as we exchange our vows</span>
-        <div className={styles.pairGrid}>
-          <p className={styles.pair}>Mr. Adriano Ponsaran &amp; Mrs. Genelilyn Ponsaran</p>
-          <p className={styles.pair}>Mr. Ryan Guinieta &amp; Mrs. Monica Guinieta</p>
-          <p className={styles.pair}>Mr. Gerardo Marcelino &amp; Mrs. May Quiocho</p>
-          <p className={styles.pair}>Mr. Lowell Suba &amp; Mrs. Manilyn Suba</p>
-          <p className={styles.pair}>Mr. Angelito Cardinal &amp; Mrs. Veronica Cardinal</p>
-          <p className={styles.pair}>Mr. Eduardo Galacgac &amp; Mrs. Juvy Torejos</p>
-          <p className={styles.pair}>Mr. Estilito Halasan Jr. &amp; Mrs. Amy Halasan</p>
-          <p className={styles.pair}>Engr. Reque Diodina &amp; Mrs. Bregida Diodina</p>
-          <p className={styles.pair}>Mr. Ildefonso Halasan &amp; Mrs. Leonilla Halasan</p>
-          <p className={styles.pair}>Mr. Robert Calumpang &amp; Mrs. Marissa Calumpang</p>
-          <p className={styles.pair}>Mr. Wilfredo Amemensi &amp; Mrs. Esmeralda Amemensi</p>
-          <p className={styles.pair}>Mr. Rodolfo Jazul Jr. &amp; Mrs. Ernanita Jazul</p>
-          <p className={styles.pair}>Engr. Nelson Marasigan &amp; Mrs. Ellen L. Marasigan</p>
-          <p className={styles.pair}>Mr. Rogelio Jamero &amp; Mrs. Raquel Jamero</p>
-          <p className={styles.pair}>Mr. John Ray Bass &amp; Mrs. Meilah Rose Bass</p>
-          <p className={styles.pair}>Mr. Aniceto Ureta Solis Jr. &amp; Engr. Noramie Pila</p>
-          <p className={styles.pair}>Mr. Jose Ureta Alvarez Jr. &amp; Mrs. Genoveva Calumpang</p>
-          <p className={styles.pair}>Mrs. Arlene Yangan &amp; Ms. Nelda Ureta</p>
+          <div style={rowGrid(200)}>
+            <h3 style={rowLabel}>Secondary Sponsors</h3>
+            {SECONDARY.map((s) => <Names key={s.label} label={s.label} names={s.names} />)}
+          </div>
+
+          <div style={{ paddingTop: "1.4rem", borderTop: `1px solid ${c.line}` }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: ".5rem", marginBottom: "1.4rem" }}>
+              <h3 style={{ ...rowLabel, paddingTop: 0 }}>Principal Sponsors</h3>
+              <p style={note}>To stand as witnesses as we exchange our vows</p>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,290px),1fr))", gap: ".45rem clamp(1.5rem,4vw,3rem)" }}>
+              {PRINCIPAL_SPONSORS.map((s) => <p key={s} style={{ fontSize: "1.28rem" }}>{s}</p>)}
+            </div>
+          </div>
         </div>
       </div>
     </section>

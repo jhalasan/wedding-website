@@ -1,9 +1,11 @@
-import { c } from "../theme";
+import { c, reveal } from "../theme";
 import { SAVE_THE_DATE } from "../data/photos";
+import { useReveal } from "../hooks/useReveal";
 
 export default function SaveTheDate() {
+  const { ref, visible } = useReveal<HTMLElement>();
   return (
-    <section style={{ position: "relative", height: "min(60svh,540px)", display: "grid", placeItems: "center", overflow: "hidden" }}>
+    <section ref={ref} style={{ position: "relative", height: "min(60svh,540px)", display: "grid", placeItems: "center", overflow: "hidden", ...reveal(visible) }}>
       <img src={SAVE_THE_DATE} alt="Julius and Revia" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 35%" }} />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(28,40,27,.3),rgba(28,40,27,.6))" }} />
       <div style={{ position: "relative", textAlign: "center", color: c.white, padding: "0 1.5rem", display: "flex", flexDirection: "column", alignItems: "center", gap: ".8rem" }}>

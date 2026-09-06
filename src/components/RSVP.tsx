@@ -1,31 +1,34 @@
+import { useState } from "react";
+import { c, rule, sectionPad, reveal } from "../theme";
 import { RSVP_FORM_URL } from "../config/rsvp";
-import styles from "./RSVP.module.css";
+import { useReveal } from "../hooks/useReveal";
 
-export function RSVP() {
+export default function Rsvp() {
+  const [hover, setHover] = useState(false);
+  const url = (RSVP_FORM_URL || "").trim();
+  const { ref, visible } = useReveal<HTMLElement>();
+
   return (
-    <section id="rsvp">
-      <div className="section-head">
-        <span className="eyebrow">We Await Your Response</span>
-        <h2>RSVP</h2>
-        <span className="rule"></span>
-      </div>
-
-      <div className={styles.rsvpCard}>
-        <p>Kindly let us know if you'll be able to join us in celebrating our special day.</p>
-        <p className={styles.deadline}>
-          Please respond on or before <strong>September 10, 2026</strong>
+    <section ref={ref} id="rsvp" style={{ background: c.green, color: c.white, padding: sectionPad, ...reveal(visible) }}>
+      <div style={{ maxWidth: "42rem", margin: "0 auto", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "1.1rem" }}>
+        <span style={{ fontSize: ".86rem", letterSpacing: ".3em", textTransform: "uppercase", fontWeight: 600, color: c.goldSoft }}>We Await Your Response</span>
+        <h2 style={{ fontSize: "clamp(2rem,5vw,2.9rem)", fontStyle: "italic", color: c.white }}>RSVP</h2>
+        <span style={rule(c.goldSoft)} />
+        <p style={{ fontSize: "clamp(1.15rem,2.6vw,1.35rem)", color: "#EFEBDC", marginTop: ".4rem" }}>Kindly let us know if you'll be able to join us in celebrating our special day.</p>
+        <p style={{ fontSize: "1.08rem", color: c.goldSoft }}>
+          Please respond on or before <strong style={{ color: c.white, fontVariantNumeric: "tabular-nums", fontWeight: 600 }}>September 10, 2026</strong>
         </p>
         <a
-          className="btn solid"
-          href={RSVP_FORM_URL || "#"}
+          href={url || "#rsvp"}
           target="_blank"
           rel="noopener"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+          style={{ marginTop: ".6rem", fontSize: ".9rem", letterSpacing: ".16em", textTransform: "uppercase", fontWeight: 600, padding: ".95rem 2.2rem", background: hover ? c.goldSoft : c.white, color: c.ink, transition: "background .25s ease" }}
         >
           RSVP via Google Form
         </a>
-        {!RSVP_FORM_URL && (
-          <p className={styles.rsvpNote}>Form link coming soon &mdash; check back, or ask Juls &amp; Rev directly.</p>
-        )}
+        {!url && <p style={{ fontSize: "1.1rem", color: c.mint, fontStyle: "italic" }}>Form link coming soon — check back, or ask Juls &amp; Rev directly.</p>}
       </div>
     </section>
   );
