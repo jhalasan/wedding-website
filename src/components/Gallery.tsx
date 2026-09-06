@@ -16,17 +16,30 @@ const photos = [photo1, photo2, photo3, photo4, photo5, photo6, photo7, photo8, 
 
 export function Gallery() {
   const trackRef = useRef<HTMLDivElement>(null);
+  const activeRef = useRef(0);
+  const suppressScrollRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [active, setActive] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const scrollToIndex = (index: number) => {
+    const clamped = Math.max(0, Math.min(index, photos.length - 1));
+    activeRef.current = clamped;
+    setActive(clamped);
     const track = trackRef.current;
     if (!track) return;
-    const slide = track.children[index] as HTMLElement | undefined;
+    const slide = track.children[clamped] as HTMLElement | undefined;
     slide?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+
+    // Ignore scroll-driven index updates until the smooth scroll settles,
+    // so a rapid second click isn't computed from a mid-animation position.
+    if (suppressScrollRef.current) clearTimeout(suppressScrollRef.current);
+    suppressScrollRef.current = setTimeout(() => {
+      suppressScrollRef.current = null;
+    }, 500);
   };
 
   const handleScroll = () => {
+    if (suppressScrollRef.current) return;
     const track = trackRef.current;
     if (!track) return;
     const center = track.scrollLeft + track.clientWidth / 2;
@@ -41,6 +54,7 @@ export function Gallery() {
         closest = i;
       }
     });
+    activeRef.current = closest;
     setActive(closest);
   };
 
@@ -79,7 +93,7 @@ export function Gallery() {
         <button
           type="button"
           className={styles.arrow}
-          onClick={() => scrollToIndex(Math.max(active - 1, 0))}
+          onClick={() => scrollToIndex(activeRef.current - 1)}
           aria-label="Previous photo"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -100,7 +114,7 @@ export function Gallery() {
         <button
           type="button"
           className={styles.arrow}
-          onClick={() => scrollToIndex(Math.min(active + 1, photos.length - 1))}
+          onClick={() => scrollToIndex(activeRef.current + 1)}
           aria-label="Next photo"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
