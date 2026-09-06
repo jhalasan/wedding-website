@@ -25,6 +25,7 @@ img { display: block; }
 #rsvp input:focus {
   outline: none;
   border-color: #E7DCBE;
+  box-shadow: 0 0 0 3px rgba(231, 220, 190, .55);
 }
 
 #rsvp input::placeholder {

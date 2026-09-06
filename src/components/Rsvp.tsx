@@ -26,7 +26,8 @@ const fieldLabel: React.CSSProperties = {
   textAlign: "left",
 };
 
-const errorText: React.CSSProperties = { fontSize: ".9rem", color: c.goldSoft, fontWeight: 600, margin: 0, textAlign: "left" };
+const errorText: React.CSSProperties = { fontSize: ".9rem", color: "#F0B8AE", fontWeight: 600, margin: 0, textAlign: "left" };
+const errorBorder = "1px solid #E7A9A0";
 
 export default function Rsvp() {
   const { ref, visible } = useReveal<HTMLElement>();
@@ -36,15 +37,37 @@ export default function Rsvp() {
   const [name, setName] = useState("");
   const [attending, setAttending] = useState<Attending>(null);
   const [guests, setGuests] = useState(1);
-  const [localError, setLocalError] = useState<string | null>(null);
+  const [nameError, setNameError] = useState(false);
+  const [attendingError, setAttendingError] = useState(false);
+
+  const localError =
+    nameError && attendingError
+      ? "Please enter your name and choose a response."
+      : nameError
+      ? "Please enter your full name."
+      : attendingError
+      ? "Please let us know if you'll be joining us."
+      : null;
+
+  const handleNameChange = (value: string) => {
+    setName(value);
+    if (nameError && value.trim()) setNameError(false);
+  };
+
+  const handleAttendingChange = (value: Attending) => {
+    setAttending(value);
+    if (attendingError && value) setAttendingError(false);
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    if (!name.trim() || !attending) {
+    const missingName = !name.trim();
+    const missingAttending = !attending;
+    if (missingName || missingAttending) {
       e.preventDefault();
-      setLocalError("Please enter your name and choose a response.");
+      setNameError(missingName);
+      setAttendingError(missingAttending);
       return;
     }
-    setLocalError(null);
     handleFormspreeSubmit(e);
   };
 
@@ -82,9 +105,10 @@ export default function Rsvp() {
                 name="name"
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => handleNameChange(e.target.value)}
                 placeholder="Enter your full name"
-                style={{ padding: ".85rem 1rem", fontSize: "1.05rem", fontFamily: "inherit", color: c.white, background: "rgba(255,253,247,.06)", border: "1px solid rgba(255,253,247,.35)" }}
+                aria-invalid={nameError}
+                style={{ padding: ".85rem 1rem", fontSize: "1.05rem", fontFamily: "inherit", color: c.white, background: "rgba(255,253,247,.06)", border: nameError ? errorBorder : "1px solid rgba(255,253,247,.35)" }}
               />
               <ValidationError prefix="Name" field="name" errors={state.errors} style={errorText} />
             </div>
@@ -94,24 +118,26 @@ export default function Rsvp() {
               <div style={{ display: "flex", gap: ".7rem" }}>
                 <button
                   type="button"
-                  onClick={() => setAttending("accept")}
+                  onClick={() => handleAttendingChange("accept")}
+                  aria-pressed={attending === "accept"}
                   style={{
                     ...toggleBase,
                     background: attending === "accept" ? c.goldSoft : "transparent",
                     color: attending === "accept" ? c.ink : c.paleText,
-                    border: `1px solid ${attending === "accept" ? c.goldSoft : "rgba(255,253,247,.4)"}`,
+                    border: attendingError ? errorBorder : `1px solid ${attending === "accept" ? c.goldSoft : "rgba(255,253,247,.4)"}`,
                   }}
                 >
                   Joyfully Accept
                 </button>
                 <button
                   type="button"
-                  onClick={() => setAttending("decline")}
+                  onClick={() => handleAttendingChange("decline")}
+                  aria-pressed={attending === "decline"}
                   style={{
                     ...toggleBase,
                     background: attending === "decline" ? "rgba(255,253,247,.16)" : "transparent",
                     color: c.white,
-                    border: `1px solid ${attending === "decline" ? c.white : "rgba(255,253,247,.4)"}`,
+                    border: attendingError ? errorBorder : `1px solid ${attending === "decline" ? c.white : "rgba(255,253,247,.4)"}`,
                   }}
                 >
                   Respectfully Decline

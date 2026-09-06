@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { c } from "../theme";
 
 const link: React.CSSProperties = {
@@ -20,8 +20,25 @@ export default function Nav() {
   const [hover, setHover] = useState(false);
   const [open, setOpen] = useState(false);
   const closeMenu = () => setOpen(false);
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeMenu(); };
+    const onClick = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) closeMenu();
+    };
+    window.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onClick);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onClick);
+    };
+  }, [open]);
+
   return (
     <nav
+      ref={navRef}
       style={{
         position: "sticky",
         top: 0,
