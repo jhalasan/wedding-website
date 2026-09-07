@@ -24,7 +24,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
   background: #DCD3BE;
   width: 100%;
@@ -33,11 +33,12 @@
 
 .cell {
   background: #F1ECDD;
-  padding: 1.1rem .5rem;
+  padding: 1.1rem clamp(.15rem, 1.6vw, .5rem);
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: .3rem;
+  min-width: 0;
 }
 
 .value {
@@ -48,10 +49,17 @@
 }
 
 .label {
-  font-size: .95rem;
-  letter-spacing: .22em;
+  font-size: clamp(.68rem, 2.6vw, .95rem);
+  letter-spacing: clamp(.08em, 1.4vw, .22em);
   text-transform: uppercase;
   color: #5B6753;
+  white-space: nowrap;
+}
+
+@media (max-width: 380px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .footnote {
