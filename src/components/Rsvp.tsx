@@ -1,33 +1,11 @@
 import { useState, type FormEvent } from "react";
 import { useForm, ValidationError } from "@formspree/react";
-import { c, rule, sectionPad, reveal } from "../theme";
 import { FORMSPREE_FORM_ID } from "../config/rsvp";
 import { useReveal } from "../hooks/useReveal";
+import shared from "../styles/shared.module.css";
+import styles from "./Rsvp.module.css";
 
 type Attending = "accept" | "decline" | null;
-
-const toggleBase: React.CSSProperties = {
-  flex: 1,
-  padding: ".9rem 1rem",
-  fontSize: ".84rem",
-  letterSpacing: ".14em",
-  textTransform: "uppercase",
-  fontWeight: 600,
-  cursor: "pointer",
-  transition: "background .25s ease, color .25s ease, border-color .25s ease",
-};
-
-const fieldLabel: React.CSSProperties = {
-  fontSize: ".8rem",
-  letterSpacing: ".2em",
-  textTransform: "uppercase",
-  fontWeight: 600,
-  color: c.goldSoft,
-  textAlign: "left",
-};
-
-const errorText: React.CSSProperties = { fontSize: ".9rem", color: "#F0B8AE", fontWeight: 600, margin: 0, textAlign: "left" };
-const errorBorder = "1px solid #E7A9A0";
 
 export default function Rsvp() {
   const { ref, visible } = useReveal<HTMLElement>();
@@ -72,23 +50,23 @@ export default function Rsvp() {
   };
 
   return (
-    <section ref={ref} id="rsvp" style={{ background: c.green, color: c.white, padding: sectionPad, ...reveal(visible) }}>
-      <div style={{ maxWidth: "34rem", margin: "0 auto", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "1.1rem" }}>
-        <span style={{ fontSize: ".86rem", letterSpacing: ".3em", textTransform: "uppercase", fontWeight: 600, color: c.goldSoft }}>We Await Your Response</span>
-        <h2 style={{ fontSize: "clamp(2rem,5vw,2.9rem)", fontStyle: "italic", color: c.white }}>RSVP</h2>
-        <span style={rule(c.goldSoft)} />
-        <p style={{ fontSize: "clamp(1.15rem,2.6vw,1.35rem)", color: "#EFEBDC", marginTop: ".4rem" }}>Kindly let us know if you'll be able to join us in celebrating our special day.</p>
-        <p style={{ fontSize: "1.08rem", color: c.goldSoft }}>
-          Please respond on or before <strong style={{ color: c.white, fontVariantNumeric: "tabular-nums", fontWeight: 600 }}>September 10, 2026</strong>
+    <section ref={ref} id="rsvp" className={`${styles.section} ${shared.reveal}${visible ? ` ${shared.revealVisible}` : ""}`}>
+      <div className={styles.inner}>
+        <span className={styles.kicker}>We Await Your Response</span>
+        <h2 className={styles.title}>RSVP</h2>
+        <span className={shared.ruleLight} />
+        <p className={styles.lead}>Kindly let us know if you'll be able to join us in celebrating our special day.</p>
+        <p className={styles.deadline}>
+          Please respond on or before <strong className={styles.deadlineDate}>September 10, 2026</strong>
         </p>
 
         {!formId && (
-          <p style={{ fontSize: "1.1rem", color: c.mint, fontStyle: "italic", marginTop: ".6rem" }}>RSVP form is being finalized — check back soon, or ask Juls &amp; Rev directly.</p>
+          <p className={styles.pending}>RSVP form is being finalized — check back soon, or ask Juls &amp; Rev directly.</p>
         )}
 
         {formId && state.succeeded && (
-          <div style={{ marginTop: "1.4rem", padding: "2rem clamp(1.4rem,4vw,2.4rem)", background: "rgba(255,253,247,.08)", backdropFilter: "blur(6px)", border: "1px solid rgba(255,253,247,.22)", width: "100%" }}>
-            <p style={{ fontSize: "1.3rem", fontStyle: "italic", color: c.white }}>
+          <div className={styles.panel}>
+            <p className={styles.successText}>
               Thank you, {name.trim()}!
               <br />
               {attending === "accept" ? "We can't wait to celebrate with you." : "You'll be in our hearts on the day."}
@@ -97,9 +75,9 @@ export default function Rsvp() {
         )}
 
         {formId && !state.succeeded && (
-          <form onSubmit={handleSubmit} style={{ marginTop: "1.2rem", width: "100%", display: "flex", flexDirection: "column", gap: "1.1rem", padding: "clamp(1.4rem,4vw,2.4rem)", background: "rgba(255,253,247,.08)", backdropFilter: "blur(6px)", border: "1px solid rgba(255,253,247,.22)" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
-              <label htmlFor="rsvp-name" style={fieldLabel}>Your full name</label>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.field}>
+              <label htmlFor="rsvp-name" className={styles.fieldLabel}>Your full name</label>
               <input
                 id="rsvp-name"
                 name="name"
@@ -108,24 +86,19 @@ export default function Rsvp() {
                 onChange={(e) => handleNameChange(e.target.value)}
                 placeholder="Enter your full name"
                 aria-invalid={nameError}
-                style={{ padding: ".85rem 1rem", fontSize: "1.05rem", fontFamily: "inherit", color: c.white, background: "rgba(255,253,247,.06)", border: nameError ? errorBorder : "1px solid rgba(255,253,247,.35)" }}
+                className={`${styles.input}${nameError ? ` ${styles.inputError}` : ""}`}
               />
-              <ValidationError prefix="Name" field="name" errors={state.errors} style={errorText} />
+              <ValidationError prefix="Name" field="name" errors={state.errors} className={styles.errorText} />
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
-              <span style={fieldLabel}>Will you be joining us?</span>
-              <div style={{ display: "flex", gap: ".7rem" }}>
+            <div className={styles.field}>
+              <span className={styles.fieldLabel}>Will you be joining us?</span>
+              <div className={styles.toggleRow}>
                 <button
                   type="button"
                   onClick={() => handleAttendingChange("accept")}
                   aria-pressed={attending === "accept"}
-                  style={{
-                    ...toggleBase,
-                    background: attending === "accept" ? c.goldSoft : "transparent",
-                    color: attending === "accept" ? c.ink : c.paleText,
-                    border: attendingError ? errorBorder : `1px solid ${attending === "accept" ? c.goldSoft : "rgba(255,253,247,.4)"}`,
-                  }}
+                  className={`${styles.toggle}${attending === "accept" ? ` ${styles.toggleAccept}` : ""}${attendingError ? ` ${styles.toggleError}` : ""}`}
                 >
                   Joyfully Accept
                 </button>
@@ -133,12 +106,7 @@ export default function Rsvp() {
                   type="button"
                   onClick={() => handleAttendingChange("decline")}
                   aria-pressed={attending === "decline"}
-                  style={{
-                    ...toggleBase,
-                    background: attending === "decline" ? "rgba(255,253,247,.16)" : "transparent",
-                    color: c.white,
-                    border: attendingError ? errorBorder : `1px solid ${attending === "decline" ? c.white : "rgba(255,253,247,.4)"}`,
-                  }}
+                  className={`${styles.toggle}${attending === "decline" ? ` ${styles.toggleDecline}` : ""}${attendingError ? ` ${styles.toggleError}` : ""}`}
                 >
                   Respectfully Decline
                 </button>
@@ -147,8 +115,8 @@ export default function Rsvp() {
             </div>
 
             {attending === "accept" && (
-              <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
-                <label htmlFor="rsvp-guests" style={fieldLabel}>Number of guests</label>
+              <div className={styles.field}>
+                <label htmlFor="rsvp-guests" className={styles.fieldLabel}>Number of guests</label>
                 <input
                   id="rsvp-guests"
                   name="guests"
@@ -157,29 +125,18 @@ export default function Rsvp() {
                   max={10}
                   value={guests}
                   onChange={(e) => setGuests(Math.min(10, Math.max(1, Number(e.target.value) || 1)))}
-                  style={{ width: "5rem", padding: ".65rem .8rem", fontSize: "1.05rem", fontFamily: "inherit", color: c.white, background: "rgba(255,253,247,.06)", border: "1px solid rgba(255,253,247,.35)" }}
+                  className={`${styles.input} ${styles.guestsInput}`}
                 />
               </div>
             )}
 
-            {localError && <p style={errorText}>{localError}</p>}
-            <ValidationError errors={state.errors} style={errorText} />
+            {localError && <p className={styles.errorText}>{localError}</p>}
+            <ValidationError errors={state.errors} className={styles.errorText} />
 
             <button
               type="submit"
               disabled={state.submitting}
-              style={{
-                fontSize: ".9rem",
-                letterSpacing: ".16em",
-                textTransform: "uppercase",
-                fontWeight: 600,
-                padding: ".95rem 2.2rem",
-                background: state.submitting ? "rgba(255,253,247,.5)" : c.white,
-                color: c.ink,
-                border: "none",
-                cursor: state.submitting ? "not-allowed" : "pointer",
-                transition: "background .25s ease",
-              }}
+              className={`${styles.submit}${state.submitting ? ` ${styles.submitDisabled}` : ""}`}
             >
               {state.submitting ? "Sending…" : "Submit RSVP"}
             </button>

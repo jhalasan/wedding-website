@@ -1,0 +1,36 @@
+.section {
+  padding: clamp(3.5rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 3rem);
+}
+
+.grid {
+  max-width: 62rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: clamp(1.6rem, 5vw, 3.5rem);
+  align-items: center;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.title {
+  font-family: 'Mrs Saint Delafield', cursive;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 6.5vw, 3.9rem);
+  line-height: 1.2;
+  padding: .1em 0;
+  color: #3F5A3C;
+}
+
+.quote {
+  font-style: italic;
+  font-size: clamp(1.2rem, 2.6vw, 1.5rem);
+  line-height: 1.62;
+  color: #5B6753;
+  border-left: 1px solid #DCD3BE;
+  padding-left: clamp(1.2rem, 3vw, 2rem);
+}

@@ -1,0 +1,70 @@
+.section {
+  padding: clamp(3.5rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 3rem);
+}
+
+.inner {
+  max-width: 66rem;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: clamp(2.2rem, 5vw, 3.2rem);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1px;
+  background: #DCD3BE;
+  border: 1px solid #DCD3BE;
+}
+
+.card {
+  background: #FFFDF7;
+  padding: clamp(1.8rem, 4vw, 2.8rem);
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+}
+
+.cardEyebrow {
+  font-size: .84rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #3F5A3C;
+}
+
+.cardTitle {
+  font-size: clamp(1.55rem, 3.6vw, 2.05rem);
+  font-style: italic;
+}
+
+.body {
+  color: #5B6753;
+}
+
+.bodySmall {
+  color: #5B6753;
+  font-size: 1.1rem;
+}
+
+.swatches {
+  display: flex;
+  gap: .6rem;
+  margin-top: .4rem;
+}
+
+.swatch {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, .12);
+}
+
+.footnote {
+  font-size: 1.1rem;
+  color: #5B6753;
+  font-style: italic;
+  margin-top: auto;
+}

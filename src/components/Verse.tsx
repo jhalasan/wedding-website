@@ -1,17 +1,18 @@
-import { c, rule, reveal } from "../theme";
 import { useReveal } from "../hooks/useReveal";
+import shared from "../styles/shared.module.css";
+import styles from "./Verse.module.css";
 
 export default function Verse() {
   const { ref, visible } = useReveal<HTMLElement>();
   return (
-    <section ref={ref} style={{ padding: "clamp(3.5rem,8vw,6rem) clamp(1.25rem,5vw,3rem)", textAlign: "center", ...reveal(visible) }}>
-      <div style={{ maxWidth: "34rem", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "1.2rem" }}>
-        <span style={rule(c.gold, 120)} />
-        <p style={{ fontStyle: "italic", fontSize: "clamp(1.3rem,3.2vw,1.85rem)", lineHeight: 1.5, color: c.green }}>
+    <section ref={ref} className={`${styles.section} ${shared.reveal}${visible ? ` ${shared.revealVisible}` : ""}`}>
+      <div className={styles.inner}>
+        <span className={shared.ruleWide} />
+        <p className={styles.quote}>
           “When the time is right, I, the Lord, will make it happen.”
         </p>
-        <span style={{ fontSize: "1rem", letterSpacing: ".26em", textTransform: "uppercase", fontWeight: 600, color: c.green }}>Isaiah 60:22</span>
-        <span style={rule(c.gold, 120)} />
+        <span className={styles.reference}>Isaiah 60:22</span>
+        <span className={shared.ruleWide} />
       </div>
     </section>
   );

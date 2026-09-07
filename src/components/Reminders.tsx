@@ -1,5 +1,6 @@
-import { c, eyebrow, sectionTitle, rule, centeredHead, reveal } from "../theme";
 import { useReveal } from "../hooks/useReveal";
+import shared from "../styles/shared.module.css";
+import styles from "./Reminders.module.css";
 
 const items = [
   { label: "Be On Time", path: <><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" /></> },
@@ -10,18 +11,18 @@ const items = [
 export default function Reminders() {
   const { ref, visible } = useReveal<HTMLElement>();
   return (
-    <section ref={ref} style={{ padding: "clamp(3.5rem,8vw,6rem) clamp(1.25rem,5vw,3rem)", ...reveal(visible) }}>
-      <div style={{ maxWidth: "62rem", margin: "0 auto" }}>
-        <div style={{ ...centeredHead, marginBottom: "clamp(2rem,4vw,3rem)" }}>
-          <span style={eyebrow}>A Few Notes</span>
-          <h2 style={sectionTitle}>Reminders</h2>
-          <span style={rule()} />
+    <section ref={ref} className={`${styles.section} ${shared.reveal}${visible ? ` ${shared.revealVisible}` : ""}`}>
+      <div className={styles.inner}>
+        <div className={`${shared.centeredHead} ${styles.header}`}>
+          <span className={shared.eyebrow}>A Few Notes</span>
+          <h2 className={shared.sectionTitle}>Reminders</h2>
+          <span className={shared.rule} />
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,200px),1fr))", gap: "clamp(1.6rem,4vw,2.4rem)", textAlign: "center" }}>
+        <div className={styles.grid}>
           {items.map((i) => (
-            <div key={i.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: ".7rem" }}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.3} style={{ width: 36, height: 36, color: c.sageLight }}>{i.path}</svg>
-              <h4 style={{ fontSize: "1.32rem", fontStyle: "italic", fontWeight: 500 }}>{i.label}</h4>
+            <div key={i.label} className={styles.item}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.3} className={styles.icon}>{i.path}</svg>
+              <h4 className={styles.label}>{i.label}</h4>
             </div>
           ))}
         </div>

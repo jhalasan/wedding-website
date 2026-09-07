@@ -1,0 +1,38 @@
+.section {
+  padding: clamp(3.5rem, 8vw, 6rem) clamp(1.25rem, 5vw, 3rem);
+}
+
+.inner {
+  max-width: 62rem;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: clamp(1.6rem, 4vw, 2.4rem);
+  text-align: center;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .7rem;
+}
+
+.icon {
+  width: 36px;
+  height: 36px;
+  color: #7C8F5D;
+}
+
+.label {
+  font-size: 1.32rem;
+  font-style: italic;
+  font-weight: 500;
+}

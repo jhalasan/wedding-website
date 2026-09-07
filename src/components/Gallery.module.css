@@ -1,0 +1,197 @@
+.section {
+  background: #F1ECDD;
+  border-top: 1px solid #DCD3BE;
+  border-bottom: 1px solid #DCD3BE;
+  padding: clamp(3.5rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 3rem);
+}
+
+.inner {
+  max-width: 74rem;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: clamp(2.2rem, 5vw, 3.2rem);
+}
+
+.carousel {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.trackWrap {
+  position: relative;
+}
+
+.track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 0 calc((100% - clamp(240px, 52vw, 460px)) / 2);
+  gap: 0;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slideButton {
+  flex: 0 0 auto;
+  width: clamp(240px, 52vw, 460px);
+  scroll-snap-align: center;
+  aspect-ratio: 4 / 5;
+  padding: 0;
+  border: none;
+  background: #FFFDF7;
+  cursor: zoom-in;
+  overflow: hidden;
+  outline: 1px solid #DCD3BE;
+  outline-offset: -1px;
+}
+
+.slideImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  opacity: .82;
+  transition: transform .5s ease, opacity .5s ease;
+}
+
+.slideImageActive {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc((100% - clamp(240px, 52vw, 460px)) / 2);
+  pointer-events: none;
+  backdrop-filter: blur(7px) saturate(.85);
+  -webkit-backdrop-filter: blur(7px) saturate(.85);
+}
+
+.fadeLeft {
+  left: 0;
+  background: linear-gradient(to right, rgba(241, 236, 221, .85), rgba(241, 236, 221, .5));
+  border-right: 1px solid rgba(255, 253, 247, .65);
+}
+
+.fadeRight {
+  right: 0;
+  background: linear-gradient(to left, rgba(241, 236, 221, .85), rgba(241, 236, 221, .5));
+  border-left: 1px solid rgba(255, 253, 247, .65);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.1rem;
+}
+
+.arrow {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border: 1px solid #3F5A3C;
+  border-radius: 50%;
+  background: none;
+  color: #3F5A3C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background .2s ease, color .2s ease;
+}
+
+.arrowIcon {
+  width: 17px;
+  height: 17px;
+}
+
+.counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .65rem;
+}
+
+.counterText {
+  font-variant-numeric: tabular-nums;
+  font-size: 1.08rem;
+  letter-spacing: .16em;
+  color: #5B6753;
+}
+
+.dots {
+  display: flex;
+  gap: .45rem;
+  align-items: center;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #DCD3BE;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width .3s ease, background .3s ease;
+}
+
+.dotActive {
+  width: 18px;
+  background: #3F5A3C;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(28, 40, 27, .94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s ease, visibility 0s linear .25s;
+}
+
+.lightboxOpen {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .25s ease;
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.4rem;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #FFFDF7;
+  border-radius: 50%;
+  background: none;
+  color: #FFFDF7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.lightboxImage {
+  max-width: min(94vw, 900px);
+  max-height: 88svh;
+  object-fit: contain;
+}

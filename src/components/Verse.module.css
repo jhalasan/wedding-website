@@ -1,0 +1,28 @@
+.section {
+  padding: clamp(3.5rem, 8vw, 6rem) clamp(1.25rem, 5vw, 3rem);
+  text-align: center;
+}
+
+.inner {
+  max-width: 34rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.quote {
+  font-style: italic;
+  font-size: clamp(1.3rem, 3.2vw, 1.85rem);
+  line-height: 1.5;
+  color: #3F5A3C;
+}
+
+.reference {
+  font-size: 1rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #3F5A3C;
+}

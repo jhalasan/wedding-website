@@ -1,0 +1,100 @@
+.section {
+  position: relative;
+  height: min(90svh, 860px);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: clamp(1.4rem, 4vw, 2.6rem);
+  overflow: hidden;
+  background: #2B3B2A;
+}
+
+.bgImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 24%;
+}
+
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(28, 40, 27, .16) 0%, rgba(28, 40, 27, .08) 34%, rgba(28, 40, 27, .62) 68%, rgba(28, 40, 27, .88) 100%);
+}
+
+.innerShadow {
+  position: absolute;
+  inset: 0;
+  box-shadow: 0 0 140px rgba(20, 30, 19, .55) inset;
+  pointer-events: none;
+}
+
+.frame {
+  position: absolute;
+  inset: clamp(1.4rem, 4vw, 2.6rem);
+  border: 1px solid #E7DCBE;
+  opacity: .75;
+  pointer-events: none;
+}
+
+.caption {
+  position: relative;
+  margin: clamp(1.2rem, 3vw, 2rem);
+  padding: clamp(1rem, 2.4vw, 1.5rem) clamp(1.2rem, 3vw, 2rem);
+  background: rgba(30, 42, 29, .42);
+  backdrop-filter: blur(8px) saturate(1.05);
+  -webkit-backdrop-filter: blur(8px) saturate(1.05);
+  border-top: 1px solid rgba(231, 220, 190, .55);
+  border-bottom: 1px solid rgba(231, 220, 190, .55);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem clamp(1.2rem, 4vw, 2.4rem);
+}
+
+.chapter {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  min-width: 0;
+}
+
+.chapterLabelRow {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.chapterRule {
+  width: 34px;
+  height: 1px;
+  background: #E7DCBE;
+}
+
+.chapterLabel {
+  font-size: .82rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #E7DCBE;
+}
+
+.chapterTitle {
+  color: #FFFDF7;
+  font-family: 'Mrs Saint Delafield', cursive;
+  font-size: clamp(2.1rem, 5.2vw, 3.4rem);
+  line-height: 1.1;
+  padding: .05em 0;
+  text-shadow: 0 2px 20px rgba(20, 30, 19, .5);
+}
+
+.tagline {
+  color: #F1ECDD;
+  font-style: italic;
+  font-size: clamp(1.05rem, 2.2vw, 1.22rem);
+  max-width: 20em;
+  text-align: right;
+  flex: 1 1 14rem;
+}

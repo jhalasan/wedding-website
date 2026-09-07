@@ -1,0 +1,54 @@
+.sectionPad {
+  padding: clamp(3.5rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 3rem);
+}
+
+.eyebrow {
+  font-size: .86rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #3F5A3C;
+}
+
+.sectionTitle {
+  font-size: clamp(2rem, 5vw, 2.9rem);
+  font-style: italic;
+  color: #2B3B2A;
+}
+
+.centeredHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .7rem;
+  text-align: center;
+}
+
+.rule {
+  width: 64px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #B79A5D, transparent);
+}
+
+.ruleLight {
+  width: 64px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #E7DCBE, transparent);
+}
+
+.ruleWide {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #B79A5D, transparent);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+
+.revealVisible {
+  opacity: 1;
+  transform: none;
+}

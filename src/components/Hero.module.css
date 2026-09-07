@@ -1,0 +1,140 @@
+.header {
+  position: relative;
+  min-height: min(94svh, 940px);
+  display: grid;
+  place-items: center;
+  padding: clamp(3rem, 9vh, 6rem) clamp(1.25rem, 5vw, 3rem);
+  overflow: hidden;
+}
+
+.bgImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 23%;
+}
+
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(28, 40, 27, .62) 0%, rgba(28, 40, 27, .34) 38%, rgba(28, 40, 27, .78) 100%);
+}
+
+.content {
+  position: relative;
+  text-align: center;
+  color: #FFFDF7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  max-width: 44rem;
+  animation: rise 1s ease both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+.together {
+  font-size: .86rem;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #E7DCBE;
+}
+
+.divider {
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(#E7DCBE, transparent);
+}
+
+.title {
+  font-family: 'Mrs Saint Delafield', cursive;
+  font-weight: 400;
+  line-height: 1.2;
+  font-size: clamp(3.4rem, 11vw, 7rem);
+  color: #FFFDF7;
+  padding: .12em 0;
+  text-shadow: 0 2px 30px rgba(20, 30, 19, .45);
+}
+
+.subtitle {
+  font-style: italic;
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  color: #F1ECDD;
+  max-width: 30rem;
+}
+
+.dateRow {
+  display: flex;
+  align-items: center;
+  gap: clamp(.8rem, 3vw, 1.6rem);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: .6rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(231, 220, 190, .45);
+}
+
+.meta {
+  font-size: .94rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.date {
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(1.3rem, 3.4vw, 1.9rem);
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+
+.venue {
+  font-size: 1.08rem;
+  color: #E7DCBE;
+  letter-spacing: .04em;
+}
+
+.actions {
+  display: flex;
+  gap: .8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1.2rem;
+}
+
+.btn {
+  font-size: .9rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: .85rem 2rem;
+  transition: background .25s ease, color .25s ease, border-color .25s ease;
+}
+
+.btnPrimary {
+  background: #FFFDF7;
+  color: #2B3B2A;
+  border: 1px solid #FFFDF7;
+}
+
+.btnPrimary:hover {
+  background: #E7DCBE;
+}
+
+.btnSecondary {
+  border: 1px solid rgba(255, 253, 247, .7);
+  color: #FFFDF7;
+  background: transparent;
+}
+
+.btnSecondary:hover {
+  background: rgba(255, 253, 247, .14);
+}

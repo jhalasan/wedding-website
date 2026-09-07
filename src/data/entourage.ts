@@ -8,7 +8,7 @@ export const MAID_OF_HONOR = ["Ms. Estelle Glaze Racines"];
 
 export const GROOMSMEN = [
   "Junjie Ureta",
-  "Dennis Anton Halasan",
+  "Sean Daniel B. Lisas",
   "Justine Ryan Calumpang",
   "Ree Ismael Halasan",
   "Kenneth Adrian Calumpang",
@@ -22,7 +22,7 @@ export const BRIDESMAIDS = [
   "Hannah Katrina Tancio",
 ];
 
-export const FLOWER_GIRLS = ["Zyra Bernice Lanticse", "Calla Phyllis Halasan", "Zarri Shane Navalta"];
+export const FLOWER_GIRLS = ["Zyra Bernice Lanticse", "Sofia S. Ayong", "Zarri Shane Navalta"];
 export const BEARERS = [
   { label: "Bible Bearer", names: ["Ezekiel Ivan Halasan"] },
   { label: "Ring Bearer", names: ["John Adham Ureta"] },
@@ -51,7 +51,7 @@ export const PRINCIPAL_SPONSORS = [
   "Engr. Nelson Marasigan & Mrs. Ellen L. Marasigan",
   "Mr. Rogelio Jamero & Mrs. Raquel Jamero",
   "Mr. John Ray Bass & Mrs. Meilah Rose Bass",
-  "Mr. Aniceto Ureta Solis Jr. & Engr. Noramie Pila",
+  "Mr. Aniceto Ureta Solis Jr. & Engr. Norame Pila",
   "Mr. Jose Ureta Alvarez Jr. & Mrs. Genoveva Calumpang",
   "Mrs. Arlene Yangan & Ms. Nelda Ureta",
 ];
