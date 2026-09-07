@@ -6,6 +6,7 @@ import shared from "../styles/shared.module.css";
 import styles from "./Rsvp.module.css";
 
 type Attending = "accept" | "decline" | null;
+type PlusOne = "yes" | "no" | null;
 
 export default function Rsvp() {
   const { ref, visible } = useReveal<HTMLElement>();
@@ -14,9 +15,11 @@ export default function Rsvp() {
 
   const [name, setName] = useState("");
   const [attending, setAttending] = useState<Attending>(null);
-  const [guests, setGuests] = useState(1);
+  const [plusOne, setPlusOne] = useState<PlusOne>(null);
+  const [plusOneName, setPlusOneName] = useState("");
   const [nameError, setNameError] = useState(false);
   const [attendingError, setAttendingError] = useState(false);
+  const [plusOneNameError, setPlusOneNameError] = useState(false);
 
   const localError =
     nameError && attendingError
@@ -25,6 +28,8 @@ export default function Rsvp() {
       ? "Please enter your full name."
       : attendingError
       ? "Please let us know if you'll be joining us."
+      : plusOneNameError
+      ? "Please enter your plus one's full name."
       : null;
 
   const handleNameChange = (value: string) => {
@@ -35,15 +40,35 @@ export default function Rsvp() {
   const handleAttendingChange = (value: Attending) => {
     setAttending(value);
     if (attendingError && value) setAttendingError(false);
+    if (value !== "accept") {
+      setPlusOne(null);
+      setPlusOneName("");
+      setPlusOneNameError(false);
+    }
+  };
+
+  const handlePlusOneChange = (value: PlusOne) => {
+    setPlusOne(value);
+    if (value !== "yes") {
+      setPlusOneName("");
+      setPlusOneNameError(false);
+    }
+  };
+
+  const handlePlusOneNameChange = (value: string) => {
+    setPlusOneName(value);
+    if (plusOneNameError && value.trim()) setPlusOneNameError(false);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     const missingName = !name.trim();
     const missingAttending = !attending;
-    if (missingName || missingAttending) {
+    const missingPlusOneName = attending === "accept" && plusOne === "yes" && !plusOneName.trim();
+    if (missingName || missingAttending || missingPlusOneName) {
       e.preventDefault();
       setNameError(missingName);
       setAttendingError(missingAttending);
+      setPlusOneNameError(missingPlusOneName);
       return;
     }
     handleFormspreeSubmit(e);
@@ -116,16 +141,41 @@ export default function Rsvp() {
 
             {attending === "accept" && (
               <div className={styles.field}>
-                <label htmlFor="rsvp-guests" className={styles.fieldLabel}>Number of guests</label>
+                <span className={styles.fieldLabel}>Will you be bringing a plus one?</span>
+                <div className={styles.toggleRow}>
+                  <button
+                    type="button"
+                    onClick={() => handlePlusOneChange("yes")}
+                    aria-pressed={plusOne === "yes"}
+                    className={`${styles.toggle}${plusOne === "yes" ? ` ${styles.toggleAccept}` : ""}`}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handlePlusOneChange("no")}
+                    aria-pressed={plusOne === "no"}
+                    className={`${styles.toggle}${plusOne === "no" ? ` ${styles.toggleDecline}` : ""}`}
+                  >
+                    No
+                  </button>
+                </div>
+                <input type="hidden" name="plusOne" value={plusOne === "yes" ? "Yes" : "No"} />
+              </div>
+            )}
+
+            {attending === "accept" && plusOne === "yes" && (
+              <div className={styles.field}>
+                <label htmlFor="rsvp-plus-one-name" className={styles.fieldLabel}>Plus one's full name</label>
                 <input
-                  id="rsvp-guests"
-                  name="guests"
-                  type="number"
-                  min={1}
-                  max={10}
-                  value={guests}
-                  onChange={(e) => setGuests(Math.min(10, Math.max(1, Number(e.target.value) || 1)))}
-                  className={`${styles.input} ${styles.guestsInput}`}
+                  id="rsvp-plus-one-name"
+                  name="plusOneName"
+                  type="text"
+                  value={plusOneName}
+                  onChange={(e) => handlePlusOneNameChange(e.target.value)}
+                  placeholder="Enter their full name"
+                  aria-invalid={plusOneNameError}
+                  className={`${styles.input}${plusOneNameError ? ` ${styles.inputError}` : ""}`}
                 />
               </div>
             )}
