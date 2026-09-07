@@ -47,12 +47,6 @@
   color: #E7DCBE;
 }
 
-.divider {
-  width: 1px;
-  height: 44px;
-  background: linear-gradient(#E7DCBE, transparent);
-}
-
 .title {
   font-family: 'Mrs Saint Delafield', cursive;
   font-weight: 400;
@@ -60,6 +54,7 @@
   font-size: clamp(3.4rem, 11vw, 7rem);
   color: #FFFDF7;
   padding: .12em 0;
+  margin-top: .5rem;
   text-shadow: 0 2px 30px rgba(20, 30, 19, .45);
 }
 

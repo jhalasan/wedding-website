@@ -21,12 +21,18 @@ export default function BackgroundMusic() {
   useEffect(() => {
     attemptPlay();
 
-    window.addEventListener("pointerdown", attemptPlay, { once: true });
-    window.addEventListener("keydown", attemptPlay, { once: true });
+    // Browsers only allow unmuted autoplay once a visitor has built up enough
+    // history with audio on this site (or granted it explicitly) — there's no
+    // code-level way to force it on every visit. These listeners catch the
+    // very first gesture of any kind so playback starts as soon as it's
+    // technically allowed, and a returning tab (bfcache) retries too.
+    const events: (keyof WindowEventMap)[] = ["pointerdown", "keydown", "touchend"];
+    events.forEach((event) => window.addEventListener(event, attemptPlay, { once: true }));
+    window.addEventListener("pageshow", attemptPlay);
 
     return () => {
-      window.removeEventListener("pointerdown", attemptPlay);
-      window.removeEventListener("keydown", attemptPlay);
+      events.forEach((event) => window.removeEventListener(event, attemptPlay));
+      window.removeEventListener("pageshow", attemptPlay);
     };
   }, []);
 

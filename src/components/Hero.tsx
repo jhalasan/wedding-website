@@ -8,7 +8,6 @@ export default function Hero() {
       <div className={styles.bgOverlay} />
       <div className={styles.content}>
         <span className={styles.together}>Together with our families</span>
-        <span className={styles.divider} />
         <h1 className={styles.title}>Julius &amp; Revia</h1>
         <p className={styles.subtitle}>We joyfully invite you to witness our marriage.</p>
         <div className={styles.dateRow}>
