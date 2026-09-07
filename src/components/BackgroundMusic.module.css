@@ -1,0 +1,30 @@
+.button {
+  position: fixed;
+  right: clamp(1rem, 4vw, 2rem);
+  bottom: clamp(1rem, 4vw, 2rem);
+  z-index: 40;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid #B79A5D;
+  background: rgba(250, 247, 240, .92);
+  backdrop-filter: blur(6px);
+  color: #3F5A3C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(43, 59, 42, .18);
+  transition: background .25s ease, color .25s ease, transform .2s ease;
+}
+
+.button:hover {
+  background: #3F5A3C;
+  color: #FFFDF7;
+}
+
+.icon {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+}

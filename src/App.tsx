@@ -1,4 +1,5 @@
 import "./styles/global.css";
+import BackgroundMusic from "./components/BackgroundMusic";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Verse from "./components/Verse";
@@ -17,6 +18,7 @@ import Footer from "./components/Footer";
 export default function App() {
   return (
     <div>
+      <BackgroundMusic />
       <Nav />
       <Hero />
       <Verse />
