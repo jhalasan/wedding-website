@@ -51,7 +51,10 @@ export const PRINCIPAL_SPONSORS = [
   "Engr. Nelson Marasigan & Mrs. Ellen L. Marasigan",
   "Mr. Rogelio Jamero & Mrs. Raquel Jamero",
   "Mr. John Ray Bass & Mrs. Meilah Rose Bass",
-  "Mr. Aniceto Ureta Solis Jr. & Engr. Norame Pila",
-  "Mr. Jose Ureta Alvarez Jr. & Mrs. Genoveva Calumpang",
-  "Mrs. Arlene Yangan & Ms. Nelda Ureta",
+  "Mr. Aniceto Ureta Solis Jr.",
+  "Engr. Norame Pila",
+  "Mr. Jose Ureta Alvarez Jr.",
+  "Mrs. Genoveva Calumpang",
+  "Mrs. Arlene Yangan",
+  "Ms. Nelda Ureta",
 ];

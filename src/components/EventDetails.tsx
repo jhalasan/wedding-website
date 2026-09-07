@@ -24,7 +24,7 @@ export default function EventDetails() {
             <span className={styles.cardEyebrow}>Ceremony</span>
             <h3 className={styles.cardTitle}>Sto. Niño de Bula Parish Church</h3>
             <span className={styles.address}>Zone 9, Brgy. Bula, General Santos City</span>
-            <span className={styles.time}>September 26, 2026 · 2:30 PM</span>
+            <span className={styles.time}>September 26th, 2026 · 2:30 PM</span>
             <a href="https://www.google.com/maps/search/?api=1&query=Sto.%20Ni%C3%B1o%20de%20Bula%20Parish%20Church%2C%20Bula%2C%20General%20Santos%20City" target="_blank" rel="noopener" className={styles.mapLink}>Get Directions</a>
           </div>
           <div className={styles.card}>

@@ -1,6 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useForm, ValidationError } from "@formspree/react";
-import { FORMSPREE_FORM_ID } from "../config/rsvp";
+import { WEB3FORMS_ACCESS_KEY, RSVP_CAPACITY, CURRENT_RSVP_COUNT } from "../config/rsvp";
 import { useReveal } from "../hooks/useReveal";
 import shared from "../styles/shared.module.css";
 import styles from "./Rsvp.module.css";
@@ -10,8 +9,8 @@ type PlusOne = "yes" | "no" | null;
 
 export default function Rsvp() {
   const { ref, visible } = useReveal<HTMLElement>();
-  const formId = (FORMSPREE_FORM_ID || "").trim();
-  const [state, handleFormspreeSubmit] = useForm(formId || "placeholder");
+  const accessKey = (WEB3FORMS_ACCESS_KEY || "").trim();
+  const capacityReached = CURRENT_RSVP_COUNT >= RSVP_CAPACITY;
 
   const [name, setName] = useState("");
   const [attending, setAttending] = useState<Attending>(null);
@@ -20,6 +19,9 @@ export default function Rsvp() {
   const [nameError, setNameError] = useState(false);
   const [attendingError, setAttendingError] = useState(false);
   const [plusOneNameError, setPlusOneNameError] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [succeeded, setSucceeded] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const localError =
     nameError && attendingError
@@ -60,18 +62,43 @@ export default function Rsvp() {
     if (plusOneNameError && value.trim()) setPlusOneNameError(false);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const missingName = !name.trim();
     const missingAttending = !attending;
     const missingPlusOneName = attending === "accept" && plusOne === "yes" && !plusOneName.trim();
     if (missingName || missingAttending || missingPlusOneName) {
-      e.preventDefault();
       setNameError(missingName);
       setAttendingError(missingAttending);
       setPlusOneNameError(missingPlusOneName);
       return;
     }
-    handleFormspreeSubmit(e);
+
+    setSubmitting(true);
+    setServerError(null);
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: name.trim(),
+          response: attending === "accept" ? "Joyfully Accepts" : "Respectfully Declines",
+          plusOne: attending === "accept" ? (plusOne === "yes" ? "Yes" : "No") : "No",
+          plusOneName: attending === "accept" && plusOne === "yes" ? plusOneName.trim() : "",
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSucceeded(true);
+      } else {
+        setServerError(data.message || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setServerError("Something went wrong. Please check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -85,11 +112,15 @@ export default function Rsvp() {
           Please respond on or before <strong className={styles.deadlineDate}>September 10, 2026</strong>
         </p>
 
-        {!formId && (
+        {!accessKey && (
           <p className={styles.pending}>RSVP form is being finalized — check back soon, or ask Juls &amp; Rev directly.</p>
         )}
 
-        {formId && state.succeeded && (
+        {accessKey && capacityReached && (
+          <p className={styles.pending}>We've reached full capacity for our celebration — thank you to everyone who responded. Please reach out to Juls &amp; Rev directly if you have questions.</p>
+        )}
+
+        {accessKey && !capacityReached && succeeded && (
           <div className={styles.panel}>
             <p className={styles.successText}>
               Thank you, {name.trim()}!
@@ -99,7 +130,7 @@ export default function Rsvp() {
           </div>
         )}
 
-        {formId && !state.succeeded && (
+        {accessKey && !capacityReached && !succeeded && (
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.field}>
               <label htmlFor="rsvp-name" className={styles.fieldLabel}>Your full name</label>
@@ -113,7 +144,6 @@ export default function Rsvp() {
                 aria-invalid={nameError}
                 className={`${styles.input}${nameError ? ` ${styles.inputError}` : ""}`}
               />
-              <ValidationError prefix="Name" field="name" errors={state.errors} className={styles.errorText} />
             </div>
 
             <div className={styles.field}>
@@ -136,7 +166,6 @@ export default function Rsvp() {
                   Respectfully Decline
                 </button>
               </div>
-              <input type="hidden" name="response" value={attending === "accept" ? "Joyfully Accepts" : attending === "decline" ? "Respectfully Declines" : ""} />
             </div>
 
             {attending === "accept" && (
@@ -160,7 +189,6 @@ export default function Rsvp() {
                     No
                   </button>
                 </div>
-                <input type="hidden" name="plusOne" value={plusOne === "yes" ? "Yes" : "No"} />
               </div>
             )}
 
@@ -181,14 +209,14 @@ export default function Rsvp() {
             )}
 
             {localError && <p className={styles.errorText}>{localError}</p>}
-            <ValidationError errors={state.errors} className={styles.errorText} />
+            {serverError && <p className={styles.errorText}>{serverError}</p>}
 
             <button
               type="submit"
-              disabled={state.submitting}
-              className={`${styles.submit}${state.submitting ? ` ${styles.submitDisabled}` : ""}`}
+              disabled={submitting}
+              className={`${styles.submit}${submitting ? ` ${styles.submitDisabled}` : ""}`}
             >
-              {state.submitting ? "Sending…" : "Submit RSVP"}
+              {submitting ? "Sending…" : "Submit RSVP"}
             </button>
           </form>
         )}
